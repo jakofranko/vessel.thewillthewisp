@@ -11,7 +11,7 @@ class Poem
 
 	def to_s
 
-    @templates = createTemplates
+    @templates = Ra.new("templates",$instance_path).to_a
     @usedWords = []
     @attempts  = 0
 
@@ -138,41 +138,6 @@ class Poem
     end
 
     return dict
-
-  end
-
-  def createTemplates
-
-    templates = []
-
-    # Simple
-    templates.push("A {n<1} is {a>1}..")
-    templates.push("{N<1}{n>1}?")
-    templates.push("{V>1} all {N>1}s!")
-    templates.push("{V<1} {N<1}")
-    templates.push("The {A>1} {N<1}s")
-    templates.push("{N<1}'s {N<1}")
-    templates.push("{P<1} the {N<1}")
-
-    # Intermediate
-    templates.push("The {N>1}, a {a>1} {n>1}.")
-    templates.push("A {N<1}, the {A<1} {N<1}.")
-    templates.push("{N<1} {N=1} {N>1}.")
-    templates.push("Of {A>1} & {A<1} {N=1}.")
-    templates.push("In a {a<1} {n=1} by the {n>1}.")
-    templates.push("Will the {n<1} {v<1} the {n<1}?")
-    templates.push("The {N<1} of the {A>1} {N=1}")
-    templates.push("A {n=1} {p>1} the {n<1}.")
-
-    # Complex
-    templates.push("{A<1} {N<1}, {A>1} {N>1}.") 
-    templates.push("The {N<1}'s {a<1}, a {A>1} {N>1}.") 
-    templates.push("O {N<1}! My {A<1} {A>1} {N=1}.")
-    templates.push("{V<1} the {n>1}, {v<1} the {n>1}.")
-    templates.push("{A>1} {N>1} VS {A>1} {N>1}")
-    templates.push("{V<1} the {n<1}s. #\{a<1\}\{N<1\}")
-    
-      return templates
 
   end
 

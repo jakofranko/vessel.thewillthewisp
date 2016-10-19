@@ -1,6 +1,8 @@
 #!/bin/env ruby
 # encoding: utf-8
 
+$instance_path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+
 class Willw
 
   include Vessel
@@ -9,13 +11,11 @@ class Willw
 
     include ActionCollection
 
-    def answer q = "Home"
+    def answer q = nil
 
-      path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+      load_folder("#{$instance_path}/objects/*")
 
-      load_folder("#{path}/objects/*")
-
-      return Poem.new(path).to_s
+      return Poem.new(q).to_s
 
     end
 
