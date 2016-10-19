@@ -5,25 +5,22 @@ class Poem
 
 	def initialize q = nil
 
-		@query = nil
+		@query = q.to_s.strip == "" ? nil : q
 
 	end
 
 	def to_s
 
     @templates = Ra.new("templates",$instance_path).to_a
-    @usedWords = []
-    @attempts  = 0
-
-    @dict = dict
-
-    targetTemplate = @templates.sample
+    @dict      = make_dict
 
     p = nil
     c = 0
     while !p
-      if c > 100 then targetTemplate = @templates.sample ; c = 0 end
-      p = generate(targetTemplate,@query)
+      puts "Try #{c}"
+      @usedWords = []
+      if c > 20 then targetTemplate = @templates.sample ; c = 0 end
+      p = generate(@templates.sample)
       c += 1
     end
 
@@ -59,11 +56,11 @@ class Poem
 
   end
 
-  def generate template,query = nil
+  def generate template
 
     macros = template.scan(/(?:\{)([\w\W]*?)(?=\})/)
 
-    targ = query ? query.strip.split(" ") : [findTarget,findTarget,findTarget,findTarget,findTarget]
+    targ = [(@query ? @query.strip.split(" ").first : findTarget),findTarget,findTarget,findTarget,findTarget]
     
     macros.each do |macro,v|
 
@@ -78,6 +75,7 @@ class Poem
       @usedWords.push(game.downcase)
 
       template = template.sub("{#{macro}}",game)
+
     end
 
     return template.strip
@@ -102,6 +100,9 @@ class Poem
     elsif type.downcase == "a" then type_name = "ADJ"
     elsif type.downcase == "i" then type_name = "INTERROG"
     elsif type.downcase == "p" then type_name = "PREP"
+    elsif type.downcase == "m" then type_name = "POSS"
+    elsif type.downcase == "d" then type_name = "ADV"
+    elsif type.downcase == "i" then type_name = "INTERROG"
     else return nil end
 
     @dict[type_name].shuffle.each do |word|
@@ -112,13 +113,14 @@ class Poem
       if posi == "=" && word == target then return word end
       if posi == "<" && word[0,3] == target[0,3] then return word end
       if posi == ">" && word[word.length-3,3] == target[target.length-3,3] then return word end
+      if posi == "?" then return word end
     end
 
     return nil
 
   end
 
-  def dict
+  def make_dict
 
     word_type = ""
 
