@@ -12,17 +12,19 @@ class Poem
 	def to_s
 
     @templates = Ra.new("templates",$instance_path).to_a
-    template   = @templates.sample
     @dict      = make_dict
 
     p = nil
     c = 0
+    c_t = 0
     while !p
       puts "Try #{c}"
       @usedWords = []
-      if c > 20 then template = @templates.sample ; c = 0 end
+      if c % 20 == 0 then template = @templates.sample end
+      if c > 200 then return "" end
       p = generate(template)
       c += 1
+      c_t += 1
     end
 
     return prettify(p)

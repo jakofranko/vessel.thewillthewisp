@@ -23,6 +23,43 @@ class Willw
   
   def passive_actions ; return PassiveActions.new(self,self) end
 
+  class Actions
+
+    include ActionCollection
+
+    def auto t = nil
+
+      require 'rubygems'
+      require 'twitter'
+      require "#{$nataniev.path}/secrets/secret.willwisp.config.rb"
+
+      client = Twitter::REST::Client.new($twitter_config)
+      client.search("to:thewillthewisp", :result_type => "recent").take(1).each do |tweet|
+
+        target = tweet.text.downcase.split(' ').last
+
+        ra = Ra.new("memory",$instance_path)
+
+        if ra.to_s == tweet.id.to_s then break end
+        if target.length < 4 then break end
+
+        poem = $nataniev.answer("behol call willw #{target}")
+
+        client.update("#{poem}\nThe #{target.capitalize}, for @#{tweet.user.screen_name}.", in_reply_to_status_id: tweet.id)
+        client.follow(tweet.user.screen_name)
+        
+        ra.replace(tweet.id)
+
+      end
+
+      return "?"
+
+    end
+
+  end
+  
+  def actions ; return Actions.new(self,self) end
+
   # 
 
   def display q = nil
