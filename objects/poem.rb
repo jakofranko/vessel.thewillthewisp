@@ -18,7 +18,6 @@ class Poem
     c = 0
     c_t = 0
     while !p
-      puts "Try #{c}"
       @usedWords = []
       if c % 20 == 0 then template = @templates.sample end
       if c > 200 then return "" end

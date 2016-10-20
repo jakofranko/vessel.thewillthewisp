@@ -3,6 +3,8 @@
 
 $instance_path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
 
+load_folder("#{$instance_path}/objects/*")
+
 class Willw
 
   include Vessel
@@ -13,8 +15,6 @@ class Willw
 
     def answer q = nil
 
-      load_folder("#{$instance_path}/objects/*")
-
       return Poem.new(q).to_s
 
     end
@@ -23,45 +23,20 @@ class Willw
   
   def passive_actions ; return PassiveActions.new(self,self) end
 
-  class Actions
+  def poem_for username,word
 
-    include ActionCollection
+    poem = Poem.new(word).to_s
 
-    def auto t = nil
+    if poem.to_s == "" then return "@#{username} I cannot make you a rhyme from #{word}." end
 
-      require 'rubygems'
-      require 'twitter'
-      require "#{$nataniev.path}/secrets/secret.willwisp.config.rb"
+    ra = Ra.new("memory",$instance_path)
+    if ra.to_s == "#{username}:#{word}" then return nil end
 
-      client = Twitter::REST::Client.new($twitter_config)
-      client.search("to:thewillthewisp", :result_type => "recent").take(1).each do |tweet|
+    ra.replace("#{username}:#{word}")
 
-        target = tweet.text.downcase.split(' ').last.gsub(/[^0-9a-z]/i, '')
-
-        ra = Ra.new("memory",$instance_path)
-
-        if ra.to_s == tweet.id.to_s then break end
-        if target.length < 4 then break end
-
-        poem = $nataniev.answer("behol call willw #{target}")
-        if poem.to_s == ""
-          client.update("@#{tweet.user.screen_name} I cannot make you poem from #{target}.", in_reply_to_status_id: tweet.id)
-        else
-          client.update("#{poem}\nThe #{target.capitalize}, for @#{tweet.user.screen_name}.", in_reply_to_status_id: tweet.id)
-          client.follow(tweet.user.screen_name)
-        end
-        
-        ra.replace(tweet.id)
-
-      end
-
-      return "?"
-
-    end
+    return "#{poem}\nThe #{word.capitalize}, for @#{username}."
 
   end
-  
-  def actions ; return Actions.new(self,self) end
 
   # 
 
