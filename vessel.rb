@@ -36,7 +36,7 @@ class Willw
       client = Twitter::REST::Client.new($twitter_config)
       client.search("to:thewillthewisp", :result_type => "recent").take(1).each do |tweet|
 
-        target = tweet.text.downcase.split(' ').last
+        target = tweet.text.downcase.split(' ').last.gsub(/[^0-9a-z]/i, '')
 
         ra = Ra.new("memory",$instance_path)
 
@@ -44,9 +44,12 @@ class Willw
         if target.length < 4 then break end
 
         poem = $nataniev.answer("behol call willw #{target}")
-
-        client.update("#{poem}\nThe #{target.capitalize}, for @#{tweet.user.screen_name}.", in_reply_to_status_id: tweet.id)
-        client.follow(tweet.user.screen_name)
+        if poem.to_s == ""
+          client.update("@#{tweet.user.screen_name} I cannot make you poem from #{target}.", in_reply_to_status_id: tweet.id)
+        else
+          client.update("#{poem}\nThe #{target.capitalize}, for @#{tweet.user.screen_name}.", in_reply_to_status_id: tweet.id)
+          client.follow(tweet.user.screen_name)
+        end
         
         ra.replace(tweet.id)
 
