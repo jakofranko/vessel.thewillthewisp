@@ -40,6 +40,8 @@ class Willw
       username    = last_reply.user.screen_name
       target_word = last_reply.text.downcase.split(' ').last.gsub(/[^0-9a-z]/i, '')
 
+      if username.like("thewillthewisp") then return "Repying to self." end
+        
       # Check memory
 
       ra = Ra.new("memory",$instance_path)
