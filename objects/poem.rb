@@ -40,7 +40,7 @@ class Poem
 
     c = 0
     macros.each do |macro,v|
-      type = macro[0,1]
+      type = macro[0,1].capitalize
       team = macro[1,1].to_i
       sign = team > 0 ? sign_a[team] : "?"
       targ = targ_a[team-1]
@@ -60,7 +60,7 @@ class Poem
 
     word = nil
     while !word
-      attempt = @dict["NOUN"].sample
+      attempt = @dict["N"].sample
       word = attempt.length > 5 ? attempt : nil
     end
     return word
@@ -69,17 +69,7 @@ class Poem
 
   def findWord type, posi, target, syll
 
-    if    type.like("n") then type_name = "NOUN"
-    elsif type.like("v") then type_name = "VERB"
-    elsif type.like("a") then type_name = "ADJ"
-    elsif type.like("i") then type_name = "INTERROG"
-    elsif type.like("p") then type_name = "PREP"
-    elsif type.like("m") then type_name = "ARTICLE"
-    elsif type.like("d") then type_name = "ADV"
-    elsif type.like("i") then type_name = "INTERROG"
-    else return nil end
-
-    @dict[type_name].shuffle.each do |word|
+    @dict[type].shuffle.each do |word|
       if !word then next end
       if @usedWords.include?(word) then next end
       if syll && count_syllables(word) != syll then next end
@@ -130,17 +120,10 @@ class Poem
 
     dict = {}
 
-    File.open("#{$nataniev.path}/library/dictionary.en","r:UTF-8") do |f|
-      f.each_line do |line|
-        depth = line[/\A */].size
-        line = line.strip
-        if depth == 0
-          word_type = line
-        else
-          if !dict[word_type] then dict[word_type] = [] end
-          dict[word_type].push(line)
-        end
-      end
+    Di.new("dictionary").to_a.each do |line|
+      word_type = line['C']
+      if !dict[word_type] then dict[word_type] = [] end
+      dict[word_type].push(line['WORD'])
     end
 
     return dict
