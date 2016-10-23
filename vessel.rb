@@ -3,9 +3,11 @@
 
 $instance_path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
 
+$nataniev.require("action","tweet")
+
 load_folder("#{$instance_path}/objects/*")
 
-class Willw
+class Thewillthewisp
 
   include Vessel
 
@@ -27,6 +29,12 @@ class Willw
 
     include ActionCollection
     include ActionTweet
+
+    def test q = nil
+
+      return @actor.make_poem
+      
+    end
 
     def tweet_auto
 
