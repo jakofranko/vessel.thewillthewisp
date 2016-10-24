@@ -120,7 +120,7 @@ class Poem
 
     dict = {}
 
-    Di.new("dictionary").to_a.each do |line|
+    Memory_Array.new("dictionary").to_a.each do |line|
       word_type = line['C']
       if !dict[word_type] then dict[word_type] = [] end
       dict[word_type].push(line['WORD'])

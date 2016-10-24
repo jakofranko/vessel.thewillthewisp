@@ -30,12 +30,6 @@ class Thewillthewisp
     include ActionCollection
     include ActionTweet
 
-    def test q = nil
-
-      return @actor.make_poem
-      
-    end
-
     def tweet_auto
 
       return tweet(@actor.make_poem)
