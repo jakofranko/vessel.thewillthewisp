@@ -13,10 +13,9 @@ class VesselThewillthewisp
 
     @name    = "The Will & The Wisp"
     @path    = File.expand_path(File.join(File.dirname(__FILE__), "/"))
-    @account = "thewillthewisp"
 
-    install(:default,:tweet)
     install(:default,:generate)
+    install(:default,:tweet)
 
   end
 
@@ -38,6 +37,22 @@ class ActionGenerate
     poem.dictionary = dictionary
     
     return poem.generate(q)
+
+  end
+
+end
+
+class ActionTweet
+
+  def account
+
+    return "thewillthewisp"
+
+  end
+
+  def payload
+
+    return ActionGenerate.new(@host).act
 
   end
 
