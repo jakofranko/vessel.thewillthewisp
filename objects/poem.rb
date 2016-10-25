@@ -3,16 +3,13 @@
 
 class Poem
 
-	def initialize q = nil
+  attr_accessor :templates
+  attr_accessor :dictionary
 
-		@query = q.to_s.strip == "" ? nil : q
+	def generate q = nil
 
-	end
-
-	def to_s
-
-    @templates = Ra.new("templates",$instance_path).to_a
-    @dict      = make_dict
+    @dict  = make_dict
+    @query = q
 
     p = nil
     c = 0
@@ -21,7 +18,7 @@ class Poem
       @usedWords = []
       if c % 20 == 0 then template = @templates.sample end
       if c > 200 then return "" end
-      p = generate(template)
+      p = try(template)
       c += 1
       c_t += 1
     end
@@ -30,7 +27,7 @@ class Poem
 
   end
 
-  def generate template
+  def try template
 
     macros = template.scan(/(?:\{)([\w\W]*?)(?=\})/)
 
@@ -120,7 +117,7 @@ class Poem
 
     dict = {}
 
-    Memory_Array.new("dictionary").to_a.each do |line|
+    @dictionary.each do |line|
       word_type = line['C']
       if !dict[word_type] then dict[word_type] = [] end
       dict[word_type].push(line['WORD'])
