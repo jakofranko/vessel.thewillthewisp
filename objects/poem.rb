@@ -9,7 +9,7 @@ class Poem
 	def generate q = nil
 
     @dict  = make_dict
-    @query = q
+    @query = q.to_s != "" ? q : nil
 
     p = nil
     c = 0
@@ -30,7 +30,6 @@ class Poem
   def try template
 
     macros = template.scan(/(?:\{)([\w\W]*?)(?=\})/)
-
     targ_a = [(@query ? @query.strip.split(" ").first : findTarget),findTarget,findTarget,findTarget,findTarget]
     sign_a = [">","<",">","="].shuffle
     syll_a = [1,2,3,4].shuffle
