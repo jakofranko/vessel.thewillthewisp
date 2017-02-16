@@ -1,6 +1,6 @@
 # The Will & The Wisp
     
-The Oscean wiki engine toolchain.
+Poem generating silver beetle bot.
 
 ## Available actions
 
@@ -15,7 +15,7 @@ Generic
 
 ## Documentation
 
-Generated with [Nataniev](http://wiki.xxiivv.com/Nataniev) on **Dutesamber 19, 2017**, view the [project site](http://wiki.xxiivv.com).
+Generated with [Nataniev](http://wiki.xxiivv.com/Nataniev) on **Dutesamber 19, 2017**, view the [project site](http://wiki.xxiivv.com/the+will+the+wisp).
 
 ##License
 

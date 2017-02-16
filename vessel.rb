@@ -13,8 +13,8 @@ class VesselThewillthewisp
 
     @name = "The Will & The Wisp"
     @path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
-    @docs = "The Oscean wiki engine toolchain."
-    @site = "http://wiki.xxiivv.com"
+    @docs = "Poem generating silver beetle bot."
+    @site = "http://wiki.xxiivv.com/the+will+the+wisp"
 
     install(:custom,:generate)
     install(:custom,:tweet)
