@@ -11,11 +11,15 @@ class VesselThewillthewisp
 
     super
 
-    @name    = "The Will & The Wisp"
-    @path    = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+    @name = "The Will & The Wisp"
+    @path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+    @docs = "The Oscean wiki engine toolchain."
+    @site = "http://wiki.xxiivv.com"
 
-    install(:default,:generate)
-    install(:default,:tweet)
+    install(:custom,:generate)
+    install(:custom,:tweet)
+    install(:generic,:document)
+    install(:generic,:help)
 
   end
 
@@ -24,6 +28,15 @@ end
 class ActionGenerate
 
   include Action
+
+  def initialize q = nil
+
+    super
+
+    @name = "Generate"
+    @docs = "Create a poem."
+
+  end
 
   def act q = nil
 
@@ -43,6 +56,17 @@ class ActionGenerate
 end
 
 class ActionTweet
+
+  include Action
+
+  def initialize q = nil
+
+    super
+
+    @name = "Tweet"
+    @docs = "Share poem to [@#{account}](https://twitter.com/#{account})."
+
+  end
 
   def account
 
