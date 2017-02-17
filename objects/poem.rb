@@ -91,6 +91,10 @@ class Poem
 
     p = p.gsub("sss","sses")
     p = p.gsub("shs","shes")
+    
+    p = p.gsub("ys?","ies?")
+    p = p.gsub("ys ","ies ")
+    p = p.gsub("ys.","ies.")
 
     p = p.gsub(";","\n")
     p = p.capitalize
