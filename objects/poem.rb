@@ -16,7 +16,7 @@ class Poem
     c_t = 0
     while !p
       @usedWords = []
-      if c % 20 == 0 then template = @templates.sample end
+      if c % 50 == 0 then template = @templates.sample ; puts "Picked template: #{template}" end
       if c > 200 then return "" end
       p = try(template)
       c += 1
@@ -29,6 +29,7 @@ class Poem
 
   def try template
 
+    puts "Trying template: #{template}"
     macros = template.scan(/(?:\{)([\w\W]*?)(?=\})/)
     targ_a = [(@query ? @query.strip.split(" ").first : findTarget),findTarget,findTarget,findTarget,findTarget]
     sign_a = [">","<",">","="].shuffle
@@ -83,6 +84,7 @@ class Poem
 
   def prettify p
 
+    p = " #{p} "
     p = p.gsub("a a", "an a")
     p = p.gsub("a i", "an i")
     p = p.gsub("a u", "an u")
@@ -97,9 +99,8 @@ class Poem
     p = p.gsub("ys.","ies.")
 
     p = p.gsub(";","\n")
-    p = p.capitalize
 
-    return p
+    return p.strip.capitalize
 
   end
 
