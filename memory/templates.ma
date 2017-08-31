@@ -12,7 +12,7 @@
 ~ C : CONJUNCTION
 
 @ TEMPLATE
-{N1}-{N1}.
+The {N1}-{N1}.
 {N1}s are {D0} {A1}.
 {N1} {N2}s & {N2} {N1}s.
 ~
@@ -26,7 +26,7 @@
 {P0} {N1}, {C0} {P0} {R0} {N1}.
 ~
 {Q0} are {R0} {N1} {C0} {N1}?
-{Q0} are the {N1} {N1}s?
+{Q0} are {N1}-{N1}s?
 {Q0} {R0} {n1} is {a2}.
 ~
 {V1} {R0} {A1} {N1}!
